@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎀 辦公室出氣筒 - 解壓神器</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Noto+Sans+TC:wght@400;700;900&display=swap');
+
+  :root {
+    --pink: #FF6B9D;
+    --light-pink: #FFB3CC;
+    --pale-pink: #FFF0F5;
+    --purple: #C084FC;
+    --yellow: #FDE68A;
+    --cream: #FFF9F0;
+    --dark: #4A2040;
+    --shadow-pink: rgba(255,107,157,0.3);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', 'Noto Sans TC', sans-serif;
+    background: linear-gradient(135deg, #FFE4F0 0%, #F0E4FF 50%, #FFE4F0 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='28' font-size='28'>🌸</text></svg>") 16 16, auto;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 20%, rgba(255,182,193,0.4) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(192,132,252,0.3) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(253,230,138,0.2) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ====== HEADER ====== */
+  .header {
+    text-align: center;
+    padding: 30px 0 20px;
+  }
+  .header h1 {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--pink);
+    text-shadow: 3px 3px 0 var(--light-pink), 4px 4px 0 rgba(255,107,157,0.2);
+    letter-spacing: 2px;
+    animation: titleBounce 2s ease-in-out infinite;
+  }
+  .header p {
+    color: #9B6B8A;
+    font-size: 1rem;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+  @keyframes titleBounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  /* ====== CARDS ====== */
+  .card {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 28px;
+    margin-bottom: 20px;
+    border: 2px solid rgba(255,179,204,0.5);
+    box-shadow: 0 8px 32px rgba(255,107,157,0.15), 0 2px 8px rgba(255,107,157,0.1);
+  }
+  .card h2 {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--dark);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .step-badge {
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: white;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  /* ====== INPUT ====== */
+  .cute-input {
+    width: 100%;
+    padding: 14px 20px;
+    border: 2px solid var(--light-pink);
+    border-radius: 50px;
+    font-family: 'Nunito', 'Noto Sans TC', sans-serif;
+    font-size: 1rem;
+    color: var(--dark);
+    background: var(--pale-pink);
+    outline: none;
+    transition: all 0.3s;
+  }
+  .cute-input:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 4px rgba(255,107,157,0.15);
+    background: white;
+  }
+  .cute-input::placeholder { color: #D4A0B5; }
+
+  /* ====== CHARACTER SELECT ====== */
+  .char-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .char-card {
+    background: var(--pale-pink);
+    border: 3px solid transparent;
+    border-radius: 20px;
+    padding: 16px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .char-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--light-pink);
+    box-shadow: 0 8px 20px var(--shadow-pink);
+  }
+  .char-card.selected {
+    border-color: var(--pink);
+    background: white;
+    box-shadow: 0 8px 24px var(--shadow-pink);
+    transform: translateY(-4px) scale(1.02);
+  }
+  .char-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 8px; right: 10px;
+    background: var(--pink);
+    color: white;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 900;
+  }
+  .char-figure {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+  .char-name {
+    font-weight: 900;
+    color: var(--dark);
+    font-size: 0.95rem;
+  }
+  .char-desc {
+    font-size: 0.75rem;
+    color: #9B6B8A;
+    margin-top: 4px;
+  }
+
+  /* ====== WEAPON SELECT ====== */
+  .weapon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .weapon-btn {
+    background: var(--pale-pink);
+    border: 2px solid var(--light-pink);
+    border-radius: 16px;
+    padding: 14px 8px;
+    text-align: center;
+    cursor: pointer;
+    font-family: 'Nunito', 'Noto Sans TC', sans-serif;
+    transition: all 0.2s;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--dark);
+  }
+  .weapon-btn:hover {
+    background: white;
+    border-color: var(--pink);
+    transform: scale(1.05);
+    box-shadow: 0 4px 16px var(--shadow-pink);
+  }
+  .weapon-btn:active {
+    transform: scale(0.95);
+  }
+  .weapon-icon { font-size: 2.2rem; display: block; margin-bottom: 6px; }
+
+  /* ====== BATTLE ARENA ====== */
+  #battleArena {
+    display: none;
+  }
+  .arena-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    gap: 16px;
+  }
+
+  /* HP Bar */
+  .hp-section { width: 100%; }
+  .hp-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #9B6B8A;
+    margin-bottom: 6px;
+  }
+  .hp-bar-bg {
+    background: #FFD6E4;
+    border-radius: 50px;
+    height: 18px;
+    overflow: hidden;
+    border: 2px solid var(--light-pink);
+  }
+  .hp-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #FF6B9D, #FF99C8);
+    border-radius: 50px;
+    transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+  }
+  .hp-bar::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 10px; right: 10px;
+    height: 4px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50px;
+  }
+
+  /* Character Display */
+  .character-stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 200px;
+    justify-content: center;
+  }
+  .char-name-badge {
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: white;
+    padding: 4px 18px;
+    border-radius: 50px;
+    font-weight: 900;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px var(--shadow-pink);
+  }
+  .char-body {
+    font-size: 7rem;
+    line-height: 1;
+    display: block;
+    transition: transform 0.1s;
+    user-select: none;
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
+  }
+  .char-body.hurt {
+    animation: hurtShake 0.5s ease-out;
+  }
+  .char-body.beg {
+    animation: begBounce 0.8s ease-in-out;
+  }
+  @keyframes hurtShake {
+    0% { transform: translateX(0) rotate(0); }
+    15% { transform: translateX(-12px) rotate(-8deg); }
+    30% { transform: translateX(12px) rotate(8deg); }
+    45% { transform: translateX(-8px) rotate(-5deg); }
+    60% { transform: translateX(8px) rotate(5deg); }
+    75% { transform: translateX(-4px) rotate(-2deg); }
+    100% { transform: translateX(0) rotate(0); }
+  }
+  @keyframes begBounce {
+    0% { transform: scale(1) rotate(0); }
+    25% { transform: scale(0.85) rotate(-10deg); }
+    50% { transform: scale(1.1) rotate(5deg); }
+    75% { transform: scale(0.95) rotate(-3deg); }
+    100% { transform: scale(1) rotate(0); }
+  }
+
+  /* Speech bubble */
+  .speech-bubble {
+    position: relative;
+    background: white;
+    border: 2px solid var(--light-pink);
+    border-radius: 20px;
+    padding: 12px 18px;
+    max-width: 320px;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--dark);
+    box-shadow: 0 4px 16px var(--shadow-pink);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    line-height: 1.6;
+  }
+  .speech-bubble.show {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .speech-bubble::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-bottom-color: var(--light-pink);
+  }
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-bottom-color: white;
+  }
+
+  /* Damage Numbers */
+  .damage-float {
+    position: absolute;
+    top: 20px;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--pink);
+    text-shadow: 2px 2px 0 white, -1px -1px 0 var(--light-pink);
+    pointer-events: none;
+    animation: floatUp 1.2s ease-out forwards;
+    z-index: 100;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(0.5); opacity: 1; }
+    30% { transform: translateY(-20px) scale(1.3); opacity: 1; }
+    100% { transform: translateY(-80px) scale(0.8); opacity: 0; }
+  }
+
+  /* Stars/Hearts burst */
+  .burst-particle {
+    position: absolute;
+    pointer-events: none;
+    font-size: 1.5rem;
+    animation: burstOut 0.8s ease-out forwards;
+    z-index: 99;
+  }
+  @keyframes burstOut {
+    0% { transform: translate(0,0) scale(0); opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)) scale(1); opacity: 0; }
+  }
+
+  /* ====== BUTTONS ====== */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--pink), #FF99C8);
+    color: white;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 50px;
+    font-family: 'Nunito', 'Noto Sans TC', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 6px 20px var(--shadow-pink);
+    letter-spacing: 1px;
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px var(--shadow-pink);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--pink);
+    border: 2px solid var(--pink);
+    padding: 10px 28px;
+    border-radius: 50px;
+    font-family: 'Nunito', 'Noto Sans TC', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-secondary:hover {
+    background: var(--pale-pink);
+    transform: translateY(-2px);
+  }
+  .text-center { text-align: center; }
+  .mt-16 { margin-top: 16px; }
+  .mt-8 { margin-top: 8px; }
+  .flex-center { display: flex; justify-content: center; gap: 12px; }
+
+  /* ====== SCORE / COMBO ====== */
+  .score-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 8px;
+  }
+  .score-chip {
+    background: linear-gradient(135deg, #FFF0F5, #F5E4FF);
+    border: 2px solid var(--light-pink);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-weight: 900;
+    font-size: 0.9rem;
+    color: var(--dark);
+  }
+  .score-chip span { color: var(--pink); }
+
+  /* ====== VICTORY SCREEN ====== */
+  #victoryScreen {
+    display: none;
+    text-align: center;
+    padding: 20px 0;
+  }
+  .victory-emoji { font-size: 5rem; animation: victoryBounce 0.6s ease-out; }
+  @keyframes victoryBounce {
+    0% { transform: scale(0); }
+    60% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+  .victory-title {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--pink);
+    margin: 12px 0;
+    text-shadow: 2px 2px 0 var(--light-pink);
+  }
+  .victory-msg { color: #9B6B8A; font-size: 1.05rem; line-height: 1.8; }
+
+  /* ====== CONFETTI ====== */
+  .confetti-piece {
+    position: fixed;
+    top: -20px;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    animation: confettiFall linear forwards;
+    pointer-events: none;
+    z-index: 999;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ====== NICKNAME INPUT ROW ====== */
+  .nickname-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    align-items: center;
+  }
+  .nickname-row .cute-input { flex: 1; }
+
+  /* ====== FLOATING DECOS ====== */
+  .deco-float {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+    animation: decoFloat linear infinite;
+    font-size: 1.5rem;
+  }
+  @keyframes decoFloat {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.4; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .header h1 { font-size: 2rem; }
+    .char-grid { grid-template-columns: repeat(2, 1fr); }
+    .weapon-grid { grid-template-columns: repeat(3, 1fr); }
+    .char-body { font-size: 5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating decorations -->
+<div class="deco-float" style="left:5%;animation-duration:8s;animation-delay:0s">🌸</div>
+<div class="deco-float" style="left:15%;animation-duration:12s;animation-delay:2s">💕</div>
+<div class="deco-float" style="left:30%;animation-duration:9s;animation-delay:5s">⭐</div>
+<div class="deco-float" style="left:55%;animation-duration:11s;animation-delay:1s">🎀</div>
+<div class="deco-float" style="left:70%;animation-duration:10s;animation-delay:3s">🌸</div>
+<div class="deco-float" style="left:85%;animation-duration:7s;animation-delay:4s">💫</div>
+<div class="deco-float" style="left:92%;animation-duration:13s;animation-delay:6s">🌺</div>
+
+<div class="container">
+  <!-- HEADER -->
+  <div class="header">
+    <h1>🎀 辦公室出氣筒 🎀</h1>
+    <p>上班壓力大？打一打、解個氣，煩惱全飛走～</p>
+  </div>
+
+  <!-- SETUP SECTION -->
+  <div id="setupSection">
+
+    <!-- Step 1: Your nickname -->
+    <div class="card">
+      <h2><span class="step-badge">1</span> 請輸入你的暱稱 👑</h2>
+      <input type="text" id="userNickname" class="cute-input" placeholder="請輸入你的美麗暱稱（例如：甜心小美）" maxlength="10">
+    </div>
+
+    <!-- Step 2: Choose character -->
+    <div class="card">
+      <h2><span class="step-badge">2</span> 選擇你的出氣對象 😈</h2>
+      <div class="char-grid">
+        <div class="char-card" data-char="討厭鬼" onclick="selectChar(this, 'EVIL_ELSA', '討厭鬼', '年紀大又自私，辦公室公認最難搞的老古板！')">
+          <span class="char-figure" style="font-size:1rem;display:flex;justify-content:center;">
+            <svg id="evilElsaThumb" width="72" height="90" viewBox="0 0 72 90" xmlns="http://www.w3.org/2000/svg">
+              <!-- dark aura bg -->
+              <ellipse cx="36" cy="80" rx="22" ry="6" fill="#1a0a2e" opacity="0.35"/>
+              <!-- tattered dark dress body -->
+              <path d="M22 52 Q18 68 14 82 Q24 78 36 79 Q48 78 58 82 Q54 68 50 52 Z" fill="#1a1035"/>
+              <!-- dress tattered hem -->
+              <path d="M14 82 L17 76 L20 82 L23 74 L26 82 L29 75 L32 82 L35 75 L38 82 L41 75 L44 82 L47 75 L50 82 L53 76 L58 82" stroke="#2d1b4e" stroke-width="1.5" fill="none"/>
+              <!-- dark ice shards on dress -->
+              <polygon points="28,56 31,48 34,56" fill="#1e3a5f" opacity="0.7"/>
+              <polygon points="38,60 41,51 44,60" fill="#1e3a5f" opacity="0.7"/>
+              <polygon points="22,65 25,57 28,65" fill="#1e3a5f" opacity="0.5"/>
+              <!-- collar / shoulder area -->
+              <path d="M22 52 Q28 46 36 47 Q44 46 50 52" fill="#2d1b4e" stroke="#0d0020" stroke-width="1"/>
+              <!-- arms - bony/thin -->
+              <line x1="22" y1="54" x2="13" y2="66" stroke="#3d2b5e" stroke-width="4" stroke-linecap="round"/>
+              <line x1="50" y1="54" x2="59" y2="66" stroke="#3d2b5e" stroke-width="4" stroke-linecap="round"/>
+              <!-- bony hands with claws -->
+              <circle cx="13" cy="67" r="3" fill="#c8b8d8"/>
+              <line x1="11" y1="69" x2="9" y2="73" stroke="#4a0e6e" stroke-width="1.2"/>
+              <line x1="13" y1="70" x2="12" y2="74" stroke="#4a0e6e" stroke-width="1.2"/>
+              <line x1="15" y1="69" x2="15" y2="73" stroke="#4a0e6e" stroke-width="1.2"/>
+              <circle cx="59" cy="67" r="3" fill="#c8b8d8"/>
+              <line x1="57" y1="69" x2="55" y2="73" stroke="#4a0e6e" stroke-width="1.2"/>
+              <line x1="59" y1="70" x2="58" y2="74" stroke="#4a0e6e" stroke-width="1.2"/>
+              <line x1="61" y1="69" x2="62" y2="73" stroke="#4a0e6e" stroke-width="1.2"/>
+              <!-- neck - thin -->
+              <rect x="33" y="43" width="6" height="9" rx="3" fill="#c8b8d8"/>
+              <!-- head -->
+              <ellipse cx="36" cy="34" rx="13" ry="14" fill="#d4c4e4"/>
+              <!-- silver-grey hair (elsa braid style but messy) -->
+              <path d="M23 30 Q18 22 20 14 Q24 6 36 4 Q48 6 52 14 Q54 22 49 30" fill="#a0a8c0" stroke="#888faa" stroke-width="0.5"/>
+              <!-- messy stray hairs -->
+              <path d="M22 26 Q16 20 19 12" stroke="#888faa" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M50 26 Q56 20 53 12" stroke="#888faa" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M36 4 Q33 0 31 3" stroke="#888faa" stroke-width="1.2" fill="none"/>
+              <!-- loose messy braid on side -->
+              <path d="M49 30 Q53 40 51 52 Q49 58 47 62" stroke="#909ab8" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <path d="M49 30 Q55 40 52 52 Q50 60 48 64" stroke="#a0a8c0" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-dasharray="3,2"/>
+              <!-- dark circles / sunken eyes -->
+              <ellipse cx="29" cy="33" rx="5" ry="4" fill="#1a0a2e" opacity="0.4"/>
+              <ellipse cx="43" cy="33" rx="5" ry="4" fill="#1a0a2e" opacity="0.4"/>
+              <!-- eyes - narrow mean look -->
+              <ellipse cx="29" cy="33" rx="4" ry="2.5" fill="white"/>
+              <ellipse cx="43" cy="33" rx="4" ry="2.5" fill="white"/>
+              <!-- irises - icy blue but dark -->
+              <ellipse cx="29" cy="33" rx="2.5" ry="2" fill="#1e4a7a"/>
+              <ellipse cx="43" cy="33" rx="2.5" ry="2" fill="#1e4a7a"/>
+              <!-- pupils -->
+              <ellipse cx="29" cy="33" rx="1.2" ry="1.5" fill="#050510"/>
+              <ellipse cx="43" cy="33" rx="1.2" ry="1.5" fill="#050510"/>
+              <!-- mean eyebrows - furrowed inward -->
+              <path d="M24 29 Q28 27 33 29" stroke="#4a2a6e" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M39 29 Q44 27 48 29" stroke="#4a2a6e" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- wrinkles between brows -->
+              <line x1="34" y1="30" x2="35" y2="27" stroke="#8a6a9e" stroke-width="0.8" opacity="0.7"/>
+              <line x1="38" y1="30" x2="37" y2="27" stroke="#8a6a9e" stroke-width="0.8" opacity="0.7"/>
+              <!-- nose - pointy/sharp -->
+              <path d="M34 36 L36 41 L38 36" stroke="#b0a0c4" stroke-width="1" fill="none" stroke-linecap="round"/>
+              <!-- mouth - thin mean smile / sneer -->
+              <path d="M29 44 Q33 42 36 43 Q39 42 43 44" stroke="#7a3a5a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M29 44 Q31 47 33 44" stroke="#7a3a5a" stroke-width="1" fill="none"/>
+              <!-- cheekbones - sunken look -->
+              <path d="M22 36 Q25 38 27 37" stroke="#8a6a9e" stroke-width="1" fill="none" opacity="0.5"/>
+              <path d="M50 36 Q47 38 45 37" stroke="#8a6a9e" stroke-width="1" fill="none" opacity="0.5"/>
+              <!-- dark ice crown -->
+              <path d="M27 18 L25 10 L29 16 L32 7 L35 16 L38 7 L41 16 L45 10 L43 18" fill="#1a2a4a" stroke="#2a4a7a" stroke-width="0.8"/>
+              <!-- crown gems - dark purple -->
+              <circle cx="36" cy="8" r="2" fill="#3a1a5a"/>
+              <circle cx="29" cy="11" r="1.5" fill="#1e3a6a"/>
+              <circle cx="43" cy="11" r="1.5" fill="#1e3a6a"/>
+              <!-- dark aura around body -->
+              <ellipse cx="36" cy="60" rx="18" ry="20" fill="none" stroke="#2d0a4e" stroke-width="1" stroke-dasharray="3,4" opacity="0.5"/>
+              <!-- small dark ice shards floating -->
+              <polygon points="8,45 11,40 12,46" fill="#1e3a5f" opacity="0.6"/>
+              <polygon points="62,42 65,37 66,43" fill="#1e3a5f" opacity="0.6"/>
+              <polygon points="10,60 8,54 13,57" fill="#2d1b4e" opacity="0.5"/>
+            </svg>
+          </span>
+          <div class="char-name">討厭鬼 👑🖤</div>
+          <div class="char-desc">黑心冰雪女王，陰暗又自私</div>
+        </div>
+        <div class="char-card" data-char="馬屁精" onclick="selectChar(this, '🐴', '馬屁精', '專門拍上司馬屁，背後捅人刀子！')">
+          <span class="char-figure">🐴</span>
+          <div class="char-name">馬屁精</div>
+          <div class="char-desc">愛拍馬屁、背後捅刀</div>
+        </div>
+        <div class="char-card" data-char="假笑女" onclick="selectChar(this, '🎭', '假笑女', '笑面虎！表面甜蜜私底下搞小動作！')">
+          <span class="char-figure">🎭</span>
+          <div class="char-name">假笑女</div>
+          <div class="char-desc">笑面虎、搞小動作</div>
+        </div>
+        <div class="char-card" data-char="老油條" onclick="selectChar(this, '🥴', '老油條', '混水摸魚，把爛攤子都丟給別人！')">
+          <span class="char-figure">🥴</span>
+          <div class="char-name">老油條</div>
+          <div class="char-desc">混水摸魚、推卸責任</div>
+        </div>
+        <div class="char-card" data-char="愛打小報告" onclick="selectChar(this, '🐀', '打小報告', '愛向上司告密，陷害同事！')">
+          <span class="char-figure">🐀</span>
+          <div class="char-name">愛打小報告</div>
+          <div class="char-desc">告密仔、陷害同事</div>
+        </div>
+        <div class="char-card" data-char="搶功勞" onclick="selectChar(this, '🦊', '搶功勞', '成果永遠是他的，黑鍋永遠是你背！')">
+          <span class="char-figure">🦊</span>
+          <div class="char-name">搶功勞</div>
+          <div class="char-desc">摘桃子、讓你背鍋</div>
+        </div>
+      </div>
+
+      <!-- Custom nickname for villain -->
+      <div class="nickname-row" id="villainNicknameRow" style="display:none;">
+        <input type="text" id="villainNickname" class="cute-input" placeholder="幫這個壞人取個專屬暱稱（例如：臭王八）" maxlength="8">
+      </div>
+    </div>
+
+    <!-- Start button -->
+    <div class="text-center mt-16">
+      <button class="btn-primary" onclick="startBattle()">🥊 開始出氣！</button>
+    </div>
+  </div>
+
+  <!-- BATTLE SECTION -->
+  <div id="battleArena">
+    <div class="card">
+      <div class="score-row">
+        <div class="score-chip">💥 攻擊次數：<span id="hitCount">0</span></div>
+        <div class="score-chip">🔥 連擊：<span id="comboCount">0</span></div>
+      </div>
+
+      <!-- HP Bar -->
+      <div class="hp-section">
+        <div class="hp-label">
+          <span id="villainLabel">壞人的面子值</span>
+          <span id="hpText">100 / 100</span>
+        </div>
+        <div class="hp-bar-bg">
+          <div class="hp-bar" id="hpBar" style="width:100%"></div>
+        </div>
+      </div>
+
+      <!-- Character Stage -->
+      <div class="arena-wrap">
+        <div class="character-stage" id="charStage">
+          <div class="char-name-badge" id="villainBadge">壞人</div>
+          <span class="char-body" id="charBody">🧟</span>
+          <div class="speech-bubble" id="speechBubble">...</div>
+        </div>
+      </div>
+
+      <!-- Weapon Selection -->
+      <h2 style="text-align:center;margin-bottom:12px;"><span class="step-badge">⚔️</span> 選武器開打！</h2>
+      <div class="weapon-grid">
+        <button class="weapon-btn" onclick="attack('🍳','平底鍋','被鍋蓋打扁啦！')">
+          <span class="weapon-icon">🍳</span>平底鍋
+        </button>
+        <button class="weapon-btn" onclick="attack('👠','高跟鞋','被踩扁惹！')">
+          <span class="weapon-icon">👠</span>高跟鞋
+        </button>
+        <button class="weapon-btn" onclick="attack('🌶️','辣椒','噴火啦！')">
+          <span class="weapon-icon">🌶️</span>辣辣椒
+        </button>
+        <button class="weapon-btn" onclick="attack('📁','文件夾','被公文轟炸！')">
+          <span class="weapon-icon">📁</span>文件夾
+        </button>
+        <button class="weapon-btn" onclick="attack('🌵','仙人掌','刺刺痛痛！')">
+          <span class="weapon-icon">🌵</span>仙人掌
+        </button>
+        <button class="weapon-btn" onclick="attack('💦','水球','全身濕透！')">
+          <span class="weapon-icon">💦</span>水球
+        </button>
+      </div>
+
+      <div class="text-center mt-16">
+        <button class="btn-secondary" onclick="resetGame()">🔄 重新開始</button>
+      </div>
+    </div>
+
+    <!-- Victory -->
+    <div id="victoryScreen" class="card">
+      <div class="victory-emoji">🎉</div>
+      <div class="victory-title">🎀 大勝利！壓力全解放！🎀</div>
+      <div class="victory-msg" id="victoryMsg">你太厲害了！</div>
+      <div class="text-center mt-16">
+        <button class="btn-primary" onclick="resetGame()">💕 再打一場！</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ====== STATE ======
+  let userName = '';
+  let villainEmoji = '';
+  let villainName = '';
+  let hp = 100;
+  let maxHp = 100;
+  let hitCount = 0;
+  let combo = 0;
+  let lastHitTime = 0;
+  let isBattleActive = false;
+  let speechSynth = window.speechSynthesis;
+  let voices = [];
+
+  // ====== LOAD VOICES ======
+  function loadVoices() {
+    voices = speechSynth.getVoices();
+  }
+  speechSynth.onvoiceschanged = loadVoices;
+  loadVoices();
+
+  function getTWVoice() {
+    // Try to get Traditional Chinese / Taiwan voice
+    let v = voices.find(v => v.lang === 'zh-TW');
+    if (!v) v = voices.find(v => v.lang.startsWith('zh'));
+    return v || null;
+  }
+
+  function speak(text) {
+    if (!speechSynth) return;
+    speechSynth.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    const voice = getTWVoice();
+    if (voice) utter.voice = voice;
+    utter.lang = 'zh-TW';
+    utter.rate = 0.9;
+    utter.pitch = 1.1;
+    speechSynth.speak(utter);
+  }
+
+  // ====== BEG PHRASES ======
+  function getBegPhrase() {
+    const name = userName || '大人';
+    const villain = villainName || '我';
+    const phrases = [
+      `我錯了！${name}大人，請你原諒我吧！`,
+      `求你別打了，${name}！${villain}再也不敢陷害你了！`,
+      `${name}，你是全公司最美麗的人，我怎麼敢得罪你！`,
+      `嗚嗚嗚，${name}你人美心善，饒了${villain}吧！`,
+      `對不起對不起！${name}你是天仙下凡，${villain}甘拜下風！`,
+      `${name}大美人，${villain}真的知道錯了，不要再打了！`,
+      `${name}，你是女神！${villain}願意替你跑腿打雜，求你原諒！`,
+      `哎喲！${name}你手好重，${villain}的骨頭都要斷了，饒命啊！`,
+      `${name}，你的氣質無人能比，${villain}真是有眼無珠！`,
+      `求饒求饒！${name}你是辦公室最耀眼的星星，${villain}自愧不如！`,
+    ];
+    return phrases[Math.floor(Math.random() * phrases.length)];
+  }
+
+  // ====== VICTORY PHRASES ======
+  function getVictoryMsg() {
+    const name = userName || '妳';
+    return `🌸 ${name}，妳真的太厲害了！\n辦公室的壞人已經被妳徹底打敗！\n${name}是全公司最美麗、最聰明、最厲害的人！\n壞人永遠不敢再招惹妳了 💕\n\n記住：妳值得最好的一切！✨`;
+  }
+
+  // ====== EVIL ELSA SVG (large, for battle) ======
+  const evilElsaSVG = `<svg width="120" height="150" viewBox="0 0 72 90" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="36" cy="80" rx="22" ry="6" fill="#1a0a2e" opacity="0.35"/>
+    <path d="M22 52 Q18 68 14 82 Q24 78 36 79 Q48 78 58 82 Q54 68 50 52 Z" fill="#1a1035"/>
+    <path d="M14 82 L17 76 L20 82 L23 74 L26 82 L29 75 L32 82 L35 75 L38 82 L41 75 L44 82 L47 75 L50 82 L53 76 L58 82" stroke="#2d1b4e" stroke-width="1.5" fill="none"/>
+    <polygon points="28,56 31,48 34,56" fill="#1e3a5f" opacity="0.7"/>
+    <polygon points="38,60 41,51 44,60" fill="#1e3a5f" opacity="0.7"/>
+    <polygon points="22,65 25,57 28,65" fill="#1e3a5f" opacity="0.5"/>
+    <path d="M22 52 Q28 46 36 47 Q44 46 50 52" fill="#2d1b4e" stroke="#0d0020" stroke-width="1"/>
+    <line x1="22" y1="54" x2="13" y2="66" stroke="#3d2b5e" stroke-width="4" stroke-linecap="round"/>
+    <line x1="50" y1="54" x2="59" y2="66" stroke="#3d2b5e" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="13" cy="67" r="3" fill="#c8b8d8"/>
+    <line x1="11" y1="69" x2="9" y2="73" stroke="#4a0e6e" stroke-width="1.2"/>
+    <line x1="13" y1="70" x2="12" y2="74" stroke="#4a0e6e" stroke-width="1.2"/>
+    <line x1="15" y1="69" x2="15" y2="73" stroke="#4a0e6e" stroke-width="1.2"/>
+    <circle cx="59" cy="67" r="3" fill="#c8b8d8"/>
+    <line x1="57" y1="69" x2="55" y2="73" stroke="#4a0e6e" stroke-width="1.2"/>
+    <line x1="59" y1="70" x2="58" y2="74" stroke="#4a0e6e" stroke-width="1.2"/>
+    <line x1="61" y1="69" x2="62" y2="73" stroke="#4a0e6e" stroke-width="1.2"/>
+    <rect x="33" y="43" width="6" height="9" rx="3" fill="#c8b8d8"/>
+    <ellipse cx="36" cy="34" rx="13" ry="14" fill="#d4c4e4"/>
+    <path d="M23 30 Q18 22 20 14 Q24 6 36 4 Q48 6 52 14 Q54 22 49 30" fill="#a0a8c0" stroke="#888faa" stroke-width="0.5"/>
+    <path d="M22 26 Q16 20 19 12" stroke="#888faa" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M50 26 Q56 20 53 12" stroke="#888faa" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M36 4 Q33 0 31 3" stroke="#888faa" stroke-width="1.2" fill="none"/>
+    <path d="M49 30 Q53 40 51 52 Q49 58 47 62" stroke="#909ab8" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M49 30 Q55 40 52 52 Q50 60 48 64" stroke="#a0a8c0" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-dasharray="3,2"/>
+    <ellipse cx="29" cy="33" rx="5" ry="4" fill="#1a0a2e" opacity="0.4"/>
+    <ellipse cx="43" cy="33" rx="5" ry="4" fill="#1a0a2e" opacity="0.4"/>
+    <ellipse cx="29" cy="33" rx="4" ry="2.5" fill="white"/>
+    <ellipse cx="43" cy="33" rx="4" ry="2.5" fill="white"/>
+    <ellipse cx="29" cy="33" rx="2.5" ry="2" fill="#1e4a7a"/>
+    <ellipse cx="43" cy="33" rx="2.5" ry="2" fill="#1e4a7a"/>
+    <ellipse cx="29" cy="33" rx="1.2" ry="1.5" fill="#050510"/>
+    <ellipse cx="43" cy="33" rx="1.2" ry="1.5" fill="#050510"/>
+    <path d="M24 29 Q28 27 33 29" stroke="#4a2a6e" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M39 29 Q44 27 48 29" stroke="#4a2a6e" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <line x1="34" y1="30" x2="35" y2="27" stroke="#8a6a9e" stroke-width="0.8" opacity="0.7"/>
+    <line x1="38" y1="30" x2="37" y2="27" stroke="#8a6a9e" stroke-width="0.8" opacity="0.7"/>
+    <path d="M34 36 L36 41 L38 36" stroke="#b0a0c4" stroke-width="1" fill="none" stroke-linecap="round"/>
+    <path d="M29 44 Q33 42 36 43 Q39 42 43 44" stroke="#7a3a5a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M29 44 Q31 47 33 44" stroke="#7a3a5a" stroke-width="1" fill="none"/>
+    <path d="M22 36 Q25 38 27 37" stroke="#8a6a9e" stroke-width="1" fill="none" opacity="0.5"/>
+    <path d="M50 36 Q47 38 45 37" stroke="#8a6a9e" stroke-width="1" fill="none" opacity="0.5"/>
+    <path d="M27 18 L25 10 L29 16 L32 7 L35 16 L38 7 L41 16 L45 10 L43 18" fill="#1a2a4a" stroke="#2a4a7a" stroke-width="0.8"/>
+    <circle cx="36" cy="8" r="2" fill="#3a1a5a"/>
+    <circle cx="29" cy="11" r="1.5" fill="#1e3a6a"/>
+    <circle cx="43" cy="11" r="1.5" fill="#1e3a6a"/>
+    <ellipse cx="36" cy="60" rx="18" ry="20" fill="none" stroke="#2d0a4e" stroke-width="1" stroke-dasharray="3,4" opacity="0.5"/>
+    <polygon points="8,45 11,40 12,46" fill="#1e3a5f" opacity="0.6"/>
+    <polygon points="62,42 65,37 66,43" fill="#1e3a5f" opacity="0.6"/>
+    <polygon points="10,60 8,54 13,57" fill="#2d1b4e" opacity="0.5"/>
+  </svg>`;
+
+  // ====== SELECT CHARACTER ======
+  function selectChar(el, emoji, name, desc) {
+    document.querySelectorAll('.char-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    villainEmoji = emoji;
+    villainName = name;
+    document.getElementById('villainNicknameRow').style.display = 'flex';
+    document.getElementById('villainNickname').placeholder = `幫「${name}」取個壞蛋暱稱（例如：臭${name}、死${name}）`;
+  }
+
+  // ====== START BATTLE ======
+  function startBattle() {
+    const nicknameInput = document.getElementById('userNickname').value.trim();
+    if (!nicknameInput) {
+      alert('💕 請先輸入你的暱稱哦～');
+      document.getElementById('userNickname').focus();
+      return;
+    }
+    if (!villainEmoji) {
+      alert('😤 請選擇一個出氣對象！');
+      return;
+    }
+
+    userName = nicknameInput;
+    const customVillainName = document.getElementById('villainNickname').value.trim();
+    if (customVillainName) villainName = customVillainName;
+
+    hp = 100; maxHp = 100; hitCount = 0; combo = 0;
+    isBattleActive = true;
+
+    // Update UI
+    document.getElementById('setupSection').style.display = 'none';
+    document.getElementById('battleArena').style.display = 'block';
+    document.getElementById('victoryScreen').style.display = 'none';
+    const charBodyEl = document.getElementById('charBody');
+    if (villainEmoji === 'EVIL_ELSA') {
+      charBodyEl.innerHTML = evilElsaSVG;
+      charBodyEl.style.fontSize = '1rem';
+    } else {
+      charBodyEl.innerHTML = villainEmoji;
+      charBodyEl.style.fontSize = '7rem';
+    }
+    document.getElementById('villainBadge').textContent = `😈 ${villainName}`;
+    document.getElementById('villainLabel').textContent = `${villainName} 的面子值`;
+    document.getElementById('hitCount').textContent = '0';
+    document.getElementById('comboCount').textContent = '0';
+    document.getElementById('hpBar').style.width = '100%';
+    document.getElementById('hpText').textContent = '100 / 100';
+    hideSpeechBubble();
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ====== ATTACK ======
+  function attack(weaponEmoji, weaponName, flavorText) {
+    if (!isBattleActive) return;
+
+    const now = Date.now();
+    if (now - lastHitTime < 500) return; // debounce
+    lastHitTime = now;
+
+    // Damage calculation
+    const base = Math.floor(Math.random() * 15) + 8;
+    const isCrit = Math.random() < 0.2;
+    const dmg = isCrit ? base * 2 : base;
+
+    hp = Math.max(0, hp - dmg);
+    hitCount++;
+
+    // Combo
+    if (now - lastHitTime < 2000) combo++;
+    else combo = 1;
+    lastHitTime = now;
+
+    // Update UI
+    document.getElementById('hitCount').textContent = hitCount;
+    document.getElementById('comboCount').textContent = combo;
+    updateHP();
+
+    // Animate character
+    const charBody = document.getElementById('charBody');
+    charBody.classList.remove('hurt', 'beg');
+    void charBody.offsetWidth;
+    charBody.classList.add('hurt');
+    setTimeout(() => {
+      charBody.classList.remove('hurt');
+      charBody.classList.add('beg');
+    }, 300);
+
+    // Damage number
+    showDamageNumber(isCrit ? `💥 ${dmg}！CRIT！` : `-${dmg}`, isCrit);
+
+    // Burst particles
+    spawnBurst();
+
+    // Show speech bubble + speak
+    const phrase = getBegPhrase();
+    showSpeechBubble(phrase);
+    setTimeout(() => speak(phrase), 200);
+
+    // Victory check
+    if (hp <= 0) {
+      setTimeout(showVictory, 800);
+    }
+  }
+
+  // ====== HP ======
+  function updateHP() {
+    const pct = (hp / maxHp) * 100;
+    document.getElementById('hpBar').style.width = pct + '%';
+    document.getElementById('hpText').textContent = `${hp} / ${maxHp}`;
+    // Color change
+    const bar = document.getElementById('hpBar');
+    if (pct > 60) bar.style.background = 'linear-gradient(90deg, #FF6B9D, #FF99C8)';
+    else if (pct > 30) bar.style.background = 'linear-gradient(90deg, #FFAA44, #FFCC88)';
+    else bar.style.background = 'linear-gradient(90deg, #FF4444, #FF8888)';
+  }
+
+  // ====== SPEECH BUBBLE ======
+  function showSpeechBubble(text) {
+    const bubble = document.getElementById('speechBubble');
+    bubble.textContent = text;
+    bubble.classList.remove('show');
+    void bubble.offsetWidth;
+    bubble.classList.add('show');
+  }
+  function hideSpeechBubble() {
+    document.getElementById('speechBubble').classList.remove('show');
+  }
+
+  // ====== DAMAGE NUMBER ======
+  function showDamageNumber(text, isCrit) {
+    const stage = document.getElementById('charStage');
+    const el = document.createElement('div');
+    el.className = 'damage-float';
+    el.textContent = text;
+    if (isCrit) {
+      el.style.color = '#FF4081';
+      el.style.fontSize = '2.5rem';
+    }
+    el.style.left = (30 + Math.random() * 40) + '%';
+    stage.appendChild(el);
+    setTimeout(() => el.remove(), 1200);
+  }
+
+  // ====== BURST PARTICLES ======
+  function spawnBurst() {
+    const stage = document.getElementById('charStage');
+    const particles = ['💥','⭐','💫','✨','🌸','💕'];
+    for (let i = 0; i < 6; i++) {
+      const el = document.createElement('div');
+      el.className = 'burst-particle';
+      el.textContent = particles[Math.floor(Math.random() * particles.length)];
+      const angle = (Math.PI * 2 / 6) * i + (Math.random() - 0.5);
+      const dist = 60 + Math.random() * 40;
+      el.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+      el.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+      el.style.left = '45%';
+      el.style.top = '40%';
+      stage.appendChild(el);
+      setTimeout(() => el.remove(), 800);
+    }
+  }
+
+  // ====== VICTORY ======
+  function showVictory() {
+    isBattleActive = false;
+    speechSynth.cancel();
+
+    document.getElementById('victoryScreen').style.display = 'block';
+    document.getElementById('victoryMsg').textContent = getVictoryMsg();
+
+    // Speak victory
+    setTimeout(() => speak(`${userName}，妳贏了！妳是辦公室最美麗的女神！${villainName}被妳徹底打敗啦！`), 300);
+
+    // Confetti!
+    launchConfetti();
+
+    document.getElementById('victoryScreen').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ====== CONFETTI ======
+  function launchConfetti() {
+    const colors = ['#FF6B9D','#C084FC','#FDE68A','#86EFAC','#67E8F9','#FCA5A5'];
+    for (let i = 0; i < 60; i++) {
+      setTimeout(() => {
+        const el = document.createElement('div');
+        el.className = 'confetti-piece';
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.background = colors[Math.floor(Math.random() * colors.length)];
+        el.style.animationDuration = (2 + Math.random() * 3) + 's';
+        el.style.animationDelay = Math.random() * 0.5 + 's';
+        el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        el.style.width = (8 + Math.random() * 8) + 'px';
+        el.style.height = (8 + Math.random() * 8) + 'px';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 5000);
+      }, i * 40);
+    }
+  }
+
+  // ====== RESET ======
+  function resetGame() {
+    speechSynth.cancel();
+    isBattleActive = false;
+    hp = 100; hitCount = 0; combo = 0;
+    document.getElementById('setupSection').style.display = 'block';
+    document.getElementById('battleArena').style.display = 'none';
+    document.getElementById('victoryScreen').style.display = 'none';
+    document.querySelectorAll('.char-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('villainNicknameRow').style.display = 'none';
+    document.getElementById('villainNickname').value = '';
+    villainEmoji = ''; villainName = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
